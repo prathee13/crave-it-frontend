@@ -14,9 +14,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 
 const routes = [
-  { path: '/home', component: Home,
-    path: '/about', component: About
-  }
+  { path: '/', component: Home},
+  {path: '/about', component: About}
 ]
 
 const router = new VueRouter({

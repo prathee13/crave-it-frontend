@@ -1,8 +1,9 @@
 <template>
-    <div class="app">
-        <h1 class="title">Welcome to Crave It!</h1>
-        <p> Your way to home food away from home.</p>
-        <p> Browse our options. </p>
+    <div id="app">
+        <div class="jumbotron text-center">
+          <h1>Crave-It</h1>
+          <p>A platform to order home-food away from home.</p>
+        </div>
     </div>
 </template>
 
