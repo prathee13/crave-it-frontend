@@ -12,6 +12,10 @@
             <label>Do you wish to register as a chef?</label>
             <button class="btn-sm btn-primary" @click="signUp">Register</button>
         </div>
+        <br>
+        <br>
+          <router-link to="/signin">Already a user? Sign in.</router-link>
+        <br>
     </div>
 </template>
 <script>
