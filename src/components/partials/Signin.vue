@@ -1,25 +1,30 @@
 <template>
 <div class="form-inline">
-  <h3>Sign In</h3>
-  <div class="form-group">
-    <input
-      type="text"
-      placeholder="email"
-      class="form-control"
-      v-model="email"
-    />
-    <input
-      type="password"
-      placeholder="password"
-      class="form-control"
-      v-model="password"
-    >
-    <br>
-    <button class="btn btn-primary" @click="signIn">Sign In</button>
+  <br>
+  <div>
+    <b-form>
+        <b-form-group id="input-group-1" label="Email:" label-for="input-1">
+            <b-form-input
+                id="email"
+                v-model="email"
+                required
+                placeholder="Enter email"
+            >
+            </b-form-input>
+        </b-form-group>
+        <b-form-group id="input-group-2" label="Password:" label-for="input-1">
+            <b-form-input 
+                v-model="password"
+                id="input-2" 
+                placeholder="Enter password"
+                required
+            >
+            </b-form-input>
+        </b-form-group>
+        <b-button type="submit" variant="primary" @click="signIn">Sign In</b-button>
+    </b-form>
   </div>
-  <br>
   <router-link to="/signup">Not a user? Sign up</router-link>
-  <br>
 </div>
 </template>
 

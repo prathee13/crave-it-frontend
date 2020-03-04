@@ -12,26 +12,23 @@
            <p>a small business set out to help individuals from all walks of life who stay away from their home, to connect with the home food. We run by our very eager, home-safe certified chefs who cook delicious yummy meals for your and your family to eradicate the home sickness. Trust us, we do our bit.</p>
         </div>
         <hr>
-        <div class="card-deck">
         <div class="container-fluid text-center bg-grey">
             <h2> Why choose us? </h2>
             <br>
-            <div class="row text-center">
-                <div class="card">
-                        <p><strong>Home Food</strong></p>
-                        <p>Food that feels like home.</p>
-                    
-                </div>
-                <div class="card">
-                        <p><strong>Certified chefs</strong></p>
-                        <p>Our chefs have passed kitchen safe standards to ensure you get nothing but healthy food.</p>
-                </div>
-                <div class="card">
-                        <p><strong>International cusine</strong></p>
-                        <p>Authentic foreign food from locals? Yup! We got that covered.</p>
-                </div>
-            </div>
-        </div>
+            <b-card-group deck>
+                <b-card
+                   title="Home Food">
+                        <b-card-text>Food that feels like home.</b-card-text>
+                </b-card>    
+                <b-card 
+                   title="Certified Chef">
+                        <b-card-text>Our chefs have passed kitchen safe standards to ensure you get nothing but healthy food.</b-card-text>
+                </b-card>
+                <b-card
+                   title="International Cuisine">
+                        <b-card-text>Authentic foreign food from locals? Yup! We got that covered.</b-card-text>
+                </b-card>
+            </b-card-group>
         </div>
     </div>
 </template>
