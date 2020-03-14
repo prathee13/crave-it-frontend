@@ -3,8 +3,7 @@
         <title> This is Search Component </title>
         <h4> Here's what's offered in Regina, Saskatchewan... </h4>
         <b-card-group deck>
-    <food-card v-for="(item, index) in searchData" :key="index" :item="item"></food-card>
-    <router-view></router-view>
+    <food-card v-for="(item, index) in items" :key="index" :passed-item="item" :type="type"></food-card>
     </b-card-group>
     
     </div>
@@ -22,6 +21,8 @@ export default {
     },
     data() {
         return {
+            type: this.$route.params.type,
+            items: [],
             data: [
                 {
         name: 'Idli',
@@ -47,16 +48,18 @@ export default {
             searchData: [],
         }
         },
-        mounted() {
-        this.searchData = JSON.parse(JSON.stringify(data));
-    },
+     watch: {
+    '$route': 'fetchCategory'
+  },
     methods: {
-        filteredData: function() {
-           if (this.search == '') {
-               this.searchData = JSON.parse(JSON.stringify(data));
-           } else {
-           this.searchData = this.searchData.filter(data => data.name.toLowerCase().match(this.search.toLowerCase()))
-            }
+        fetchCategory() {
+            this.items = []
+            this.type = this.$route.params.type
+        //    if (this.search == '') {
+        //        this.searchData = JSON.parse(JSON.stringify(data));
+        //    } else {
+        //    this.searchData = this.searchData.filter(data => data.name.toLowerCase().match(this.search.toLowerCase()))
+        //     }
             }
         }
     

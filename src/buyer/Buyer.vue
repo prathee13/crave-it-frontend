@@ -11,7 +11,7 @@
             <b-form-group id="cusine" label="Select cuisine" label-for="cuisine">
                 <b-form-select v-model="selectedCuisine" :options="optionCuisine"></b-form-select>
             </b-form-group>
-            <b-button disabled type="submit" variant="primary">Submit</b-button>
+            <b-button type="submit" variant="primary">Submit</b-button>
             </b-form>
         </b-card>
         <br>
@@ -19,9 +19,13 @@
 </template>
 
 <script>
+import Search from './Search.vue'
 
 export default {
     name: 'Buyer',
+    components: {
+        'category' : Search
+},
     // components : {
     //     'food-card': foodCard
     // },
@@ -43,7 +47,7 @@ export default {
     },
     methods: {
         next() {
-            this.$router.push("/search?"+this.selectedCuisine);
+            this.$router.push("/search?cuisine="+this.selectedCuisine);
         }
     }
 }
