@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <title> This is Search Component </title>
         <h4> Here's what's offered in Regina, Saskatchewan... </h4>
         <b-card-group deck>
     <food-card v-for="(item, index) in searchData" :key="index" :item="item"></food-card>
@@ -14,9 +15,8 @@
 import foodCard from './foodCard.vue'
 import data from './data.js'
 
-
 export default {
-    name: 'Category',
+    name: 'Search',
     components: {
         'food-card': foodCard
     },

@@ -12,6 +12,7 @@ import About from './view/About.vue'
 import Signup from './components/partials/Signup.vue'
 import Signin from './components/partials/Signin.vue'
 import Buyer from './buyer/Buyer.vue'
+import Search from './buyer/Search.vue'
 import Chef from './Chef/Chef.vue'
 import placeOrder from './buyer/placeOrder.vue'
 
@@ -26,12 +27,14 @@ const routes = [
   {path: '/signin', component: Signin},
   {path: '/buyer', component: Buyer},
   {path: '/chef', component: Chef},
-  {path: '/placeOrder', component: placeOrder}
+  {path: '/placeOrder', component: placeOrder},
+  {path: '/search/:cuisine', component: Search}
 ]
 
 const router = new VueRouter({
   routes
 })
+
 
 new Vue({
   el: '#app',
