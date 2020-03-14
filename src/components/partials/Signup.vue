@@ -35,7 +35,7 @@
                   <b-form-checkbox value="2">Do you want to be a chef?</b-form-checkbox>
                </b-form-checkbox-group>
             </b-form-group>
-            <b-button type="submit"  variant="primary">Register</b-button>
+            <b-button type="submit" variant="primary">Register</b-button>
             <b-button type="reset" variant="danger">Reset</b-button>
         </b-form>
           <router-link to="/signin">Already a user? Sign in.</router-link>

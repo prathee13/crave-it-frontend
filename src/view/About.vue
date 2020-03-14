@@ -17,15 +17,27 @@
             <br>
             <b-card-group deck>
                 <b-card
-                   title="Home Food">
+                   title="Home Food"
+                   img-src="https://thumbs.dreamstime.com/z/house-home-food-icon-logo-design-element-can-be-used-as-as-complement-to-95624339.jpg"
+                   img-alt="home food"
+                   img-top
+                   >
                         <b-card-text>Food that feels like home.</b-card-text>
                 </b-card>    
                 <b-card 
-                   title="Certified Chef">
+                   title="Certified Chef"
+                   img-src="https://pictures.alignable.com/eyJidWNrZXQiOiJhbGlnbmFibGV3ZWItcHJvZHVjdGlvbiIsImtleSI6ImJ1c2luZXNzZXMvbG9nb3Mvb3JpZ2luYWwvNjI4NjM5NS9TY3JlZW4gU2hvdCAyMDE5LTEyLTExIGF0IDcuMjcuMzAgQU0ucG5nIiwiZWRpdHMiOnsiZXh0cmFjdCI6eyJsZWZ0Ijo2LCJ0b3AiOjUsIndpZHRoIjo0NDYsImhlaWdodCI6NDYxfSwicmVzaXplIjp7IndpZHRoIjoxNzgsImhlaWdodCI6MTgyfSwiZXh0ZW5kIjp7InRvcCI6MCwiYm90dG9tIjowLCJsZWZ0IjowLCJyaWdodCI6NSwiYmFja2dyb3VuZCI6eyJyIjoyNTUsImciOjI1NSwiYiI6MjU1LCJhbHBoYSI6MX19fX0="
+                   img-alt="Chef"
+                   img-top
+                >
                         <b-card-text>Our chefs have passed kitchen safe standards to ensure you get nothing but healthy food.</b-card-text>
                 </b-card>
                 <b-card
-                   title="International Cuisine">
+                   title="International Cuisine"
+                   img-src="https://thumbs.dreamstime.com/z/international-food-fork-plate-knife-isolated-world-17390585.jpg"
+                   img-alt="International"
+                   img-top
+                   >
                         <b-card-text>Authentic foreign food from locals? Yup! We got that covered.</b-card-text>
                 </b-card>
             </b-card-group>

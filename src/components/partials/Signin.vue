@@ -1,8 +1,6 @@
 <template>
-<div class="form-inline">
-  <br>
-  <div>
-    <b-form>
+<div>
+    <b-form @submit="signIn">
         <b-form-group id="input-group-1" label="Email:" label-for="input-1">
             <b-form-input
                 id="email"
@@ -13,7 +11,8 @@
             </b-form-input>
         </b-form-group>
         <b-form-group id="input-group-2" label="Password:" label-for="input-1">
-            <b-form-input 
+            <b-form-input
+                type="password" 
                 v-model="password"
                 id="input-2" 
                 placeholder="Enter password"
@@ -21,28 +20,30 @@
             >
             </b-form-input>
         </b-form-group>
-        <b-button type="submit" variant="primary" @click="signIn">Sign In</b-button>
+        <b-button type="submit" variant="primary">Sign In</b-button>
     </b-form>
-  </div>
   <router-link to="/signup">Not a user? Sign up</router-link>
 </div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
-      email: '',
-      password: '',
-      error: {
-        message: ''
+      form: { 
+         email: '',
+         password: '',
+         error: {
+                  message: ''
+          }
       }
     }
-  },
+   },
   methods: {
     signIn() {
       
+      }
     }
   }
-}
 </script>
