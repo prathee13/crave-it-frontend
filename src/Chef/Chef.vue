@@ -18,16 +18,7 @@
         </b-card-text>
       </b-tab>
       <!-- Food -->
-      <b-tab title="Food">
-        <b-table foodItems="foodItems" :fields="fields" striped responsive="sm">
-          <template v-slot:cell(add_details)="row">
-            <b-button size="sm" @click="row.toggleDetails" class="mr-2">{{ row.detailsShowing ? 'Hide' : 'Show'}} Details</b-button>
-            <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
-          Details via check
-        </b-form-checkbox>
-          </template>
-        </b-table>
-      </b-tab>
+      <my-table :config="config" :header="header" :data="data"></my-table>
       <!-- Payments -->
       <b-tab title="Payment">
         <h6>Crave-It Balance</h6>
@@ -51,6 +42,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -70,6 +62,9 @@ export default {
       ]
     };
   },
-  name: "Chef"
+  name: "Chef",
+  components: {
+  'my-table': my_table
+}
 };
 </script>
