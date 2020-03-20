@@ -9,11 +9,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('./'));
 
 var pusher = new Pusher({
-    appId: '966591',
-    key: '10012db2cefe6b0c7bbc',
-    secret: 'cf8b684f098c16685a1c',
-    cluster: 'mt1',
-    ssl=True
+    appId: 'YOUR_APP_ID',
+    key: 'YOUR_KEY',
+    secret: 'YOUR_SECRET_KEY',
+    cluster: 'YOUR_CLUSTER',
+    //ssl=True
 });
 
 // pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
