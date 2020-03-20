@@ -15,7 +15,7 @@
       <button id="addDeliveryHeroButton">Add</button>
    </div>
     <!-- built files will be auto injected -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJUZlNkvC6ZzkF2MGCYCWZtghCY0GeLsM&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<YOUR_KEY_HERE>&libraries=places"></script>
     <script type="text/javascript" src="src/app.js"></script>
     <!-- Pusher components come below-->
     <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
@@ -24,8 +24,8 @@
       Pusher.logToConsole = true;
 
       //Connecting to the app - Crave-It with the provided key
-var pusher = new Pusher('10012db2cefe6b0c7bbc', {
-  cluster: 'mt1',
+var pusher = new Pusher('YOUR_KEY', {
+  cluster: 'YOUR_CLUSTER',
   forceTLS: true
 });
 
