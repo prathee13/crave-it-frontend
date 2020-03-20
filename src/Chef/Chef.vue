@@ -12,10 +12,11 @@
     <b-tabs card align="center">
       <!-- Notification -->
       <b-tab title="Notifications" active>
-        <b-card-text>
+        <!-- <b-card-text>
           You've got no new notifications.
           <br />Please come back later.
-        </b-card-text>
+        </b-card-text> -->
+        <chef-profile />
       </b-tab>
       <!-- Food -->
       <b-tab title="Food">
@@ -51,7 +52,12 @@
 </template>
 
 <script>
+import ChefProfile from './ChefProfile';
+
 export default {
+  components : {
+    'chef-profile': ChefProfile
+  },
   data() {
     return {
       fields: ["food_name", "cuisine", "show_details"],

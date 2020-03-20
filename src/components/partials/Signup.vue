@@ -1,9 +1,9 @@
 <template>
     <div> 
         <b-form @submit="signUp" @reset="onReset">
-            <b-form-group id="Name" label="Name:" label-for="input-1">
+            <b-form-group label="Name" label-for="name1">
             <b-form-input
-                id="name"
+                id="name1"
                 v-model="form.name"
                 type="name"
                 required
@@ -11,69 +11,85 @@
             >
             </b-form-input>
             </b-form-group>
-            <b-form-group id="email" label="Email:" label-for="input-2">
+            <b-form-group label="Email" label-for="email1">
             <b-form-input
-                id="email"
+                id="email1"
                 v-model="form.email"
                 required
                 placeholder="Enter email"
             >
             </b-form-input>
             </b-form-group>
-            <b-form-group id="password" label="Password:" label-for="input-3">
+            <b-form-group label="Password" label-for="password1">
             <b-form-input 
                 type="password"
                 v-model="form.password"
-                id="input-2" 
+                id="password1" 
                 placeholder="Enter password"
                 required
             >
             </b-form-input>
             </b-form-group>
-            <b-form-group id="input-group-4">
-               <b-form-checkbox-group v-model="form.role" id="checkboxes-4">
+            <b-form-group>
+               <b-form-checkbox-group v-model="form.role" id="role-check-su">
                   <b-form-checkbox value="2">Do you want to be a chef?</b-form-checkbox>
                </b-form-checkbox-group>
             </b-form-group>
             <b-button type="submit" variant="primary">Register</b-button>
             <b-button type="reset" variant="danger">Reset</b-button>
         </b-form>
-          <router-link to="/signin">Already a user? Sign in.</router-link>
     </div>
 </template>
 <script>
 
+// import Router from '../../router';
+import Axios from 'axios';
+import config from '../../config';
+import logInNotifyService from '../../_service/message.service';
 
 export default {
-    data(){
+    data() {
         return {
-            form: {
-            name: '',
+            form: {name: '',
             email: '',
             password: '',
-            role: [],
-            error: {
-                message: ''
-            }
-         }
-        }
+            role: []
+        }}
     },
     methods: {
-        signUp() {
-           evt.preventDefault()
-        alert(JSON.stringify(this.form))
+        handleSignupSuccess(data) {
+            // login successful if there's a user in the response
+            console.log(data);
+            const user = data.data;
+            if (user) {
+                // store user details and basic auth credentials in local storage 
+                // to keep user logged in between page refreshes
+                // user.authdata = window.btoa(username + ':' + password);
+                localStorage.setItem('user', JSON.stringify(user));
+                Axios.defaults.baseURL = config.apiUrl;
+                Axios.defaults.headers.common['Authorization'] = `Token ${user.token}`;
+                logInNotifyService.sendMessage(true);
+                this.$router.push({path: `/${user.user.role.name}`})
+            }
+        },
+        signUp(evt) {
+           evt.preventDefault();
+           const user_data = {
+                "username": this.form.name,
+                "email": this.form.email,
+                "password": this.form.password,
+                "role": (this.form.role.length > 0) ? 2 : 1
+            }
+        //    const api_endpoint = register ?   : `${config.apiUrl}users/login/`;
+            Axios.post(`${config.apiUrl}users/register/`, user_data).then(
+                data => {this.handleSignupSuccess(data)},
+                error => {console.log("error")});
         },
         onReset(evt) {
-        evt.preventDefault()
         // Reset our form values
-        this.form.email = ''
-        this.form.name = ''
-        this.form.role = []
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
+        this.email = ''
+        this.name = ''
+        this.role = []
       }
     }
 }

@@ -9,8 +9,8 @@ Vue.use(BootstrapVue)
 
 import Home from './view/Home.vue'
 import About from './view/About.vue'
-import Signup from './components/partials/Signup.vue'
-import Signin from './components/partials/Signin.vue'
+// import Signup from './components/partials/Signup.vue'
+// import Signin from './components/partials/Signin.vue'
 import Buyer from './buyer/Buyer.vue'
 import Search from './buyer/Search.vue'
 import Chef from './Chef/Chef.vue'
@@ -23,8 +23,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 const routes = [
   {path: '/', component: Home},
   {path: '/about', component: About},
-  {path: '/signup', component: Signup},
-  {path: '/signin', component: Signin},
+  // {path: '/signup', component: Signup},
+  // {path: '/signin', component: Signin},
   {path: '/buyer', component: Buyer},
   {path: '/chef', component: Chef},
   {path: '/placeOrder', component: placeOrder},
@@ -35,6 +35,21 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('user');
+
+  if (authRequired && !loggedIn) {
+    return next({ 
+      path: '/login', 
+      query: { returnUrl: to.path } 
+    });
+  }
+
+  next();
+})
 
 new Vue({
   el: '#app',
