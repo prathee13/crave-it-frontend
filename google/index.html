@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>google</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link href="app.css" rel="stylesheet"></link>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="delivery-hero-box" class="name-box hidden">
+      <h3 id="welcome-message"></h3>
+      <h4 id="delivery-heroes-list"></h4>
+      <input id="deliveryHeroName" type="text" placeholder="e.g. Shelly">
+      <button id="addDeliveryHeroButton">Add</button>
+   </div>
+    <!-- built files will be auto injected -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJUZlNkvC6ZzkF2MGCYCWZtghCY0GeLsM&libraries=places"></script>
+    <script type="text/javascript" src="src/app.js"></script>
+    <!-- Pusher components come below-->
+    <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Pusher.logToConsole = true;
+
+      //Connecting to the app - Crave-It with the provided key
+var pusher = new Pusher('10012db2cefe6b0c7bbc', {
+  cluster: 'mt1',
+  forceTLS: true
+});
+
+//Channels are added for security - each user is a channel
+var channel = pusher.subscribe('my-channel');
+channel.bind('my-event', function(data) {
+  app.messages.push(JSON.stringify(data));
+});
+
+// Vue application
+const app = new Vue({
+      el: '#app',
+      data: {
+        messages: [],
+      },
+    });
+
+    
+    </script>
+  </body>
+</html>
