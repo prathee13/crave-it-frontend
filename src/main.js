@@ -15,7 +15,8 @@ import Buyer from './buyer/Buyer.vue'
 import Search from './buyer/Search.vue'
 import Chef from './Chef/Chef.vue'
 import placeOrder from './buyer/placeOrder.vue'
-
+import ChefProfile from './Chef/ChefProfile.vue'
+import Dishes from './Chef/Dishes.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -26,7 +27,18 @@ const routes = [
   // {path: '/signup', component: Signup},
   // {path: '/signin', component: Signin},
   {path: '/buyer', component: Buyer},
-  {path: '/chef', component: Chef},
+  {path: '/chef', component: Chef,
+    children: [{
+      name: 'chef-profile',
+      path: 'profile',
+      component: ChefProfile
+    },
+    {
+      name: 'chef-dishes',
+      path: 'dishes',
+      component: Dishes
+    }]
+  },
   {path: '/placeOrder', component: placeOrder},
   {path: '/search/:cuisine', component: Search}
 ]

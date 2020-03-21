@@ -26,9 +26,12 @@
         <!-- Using 'button-content' slot -->
         <b-nav-item-dropdown right v-if="user_logged_in">
           <template v-slot:button-content>
-            My Account
+            Mwnu
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
+          <b-dropdown-item v-on:click="gotoProfile">Profile</b-dropdown-item>
+          <b-dropdown-item v-on:click="gotoDishes">Dishes</b-dropdown-item>
+          <b-dropdown-item v-on:click="gotoProfile">Orders</b-dropdown-item>
+          <b-dropdown-item v-on:click="gotoProfile">Location Tracker</b-dropdown-item>
           <b-dropdown-item v-on:click="logoutUser()" >Sign Out</b-dropdown-item>
           <b-dropdown-item v-on:click="logoutUser(true)">Sign Out (All devices)</b-dropdown-item>
         </b-nav-item-dropdown>
@@ -47,12 +50,23 @@ export default {
     data() {
       return {
         user_logged_in: false,
-        user_observer: null
+        user_observer: null,
+        user: null
       }
     },
     methods: {
+      gotoDishes() {
+        this.$router.push({name: 'chef-dishes'});
+      },
       gotoProfile() {
-
+        const user = JSON.parse(localStorage.getItem('user'))['user'];
+        if (user.role.name == 'chef') {
+          this.$router.push({name: 'chef-profile'})
+        } else if (user.role.name == 'buyer') {
+          this.$router.push({name: 'buyer-profile'})
+        } else {
+          this.logoutUser();
+        }
       },
       logoutUser(all=false) {
           const logout_url = all ? 'users/logout/all/' : 'users/logout/me/';

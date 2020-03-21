@@ -24,20 +24,39 @@
 </template>
 
 <script>
-
-// $(document).ready(function(){
-//   $(".nav-tabs a").click(function(){
-//     $(this).tab('show');
-//   });
-// });
-
 import Signup from '../components/partials/Signup.vue'
 import Signin from '../components/partials/Signin.vue'
+import Axios from 'axios';
+import config from '../config';
 
 export default {
     name: 'home',
     components: {
         Signup, Signin
+    }, 
+    mounted() {
+      Axios.defaults.baseURL = config.apiUrl;
+      const getUniqueCategories = (types) => {
+        const result = [];
+        const map = new Map();
+        for (const item of types) {
+            if(!map.has(item.category.id)){
+                map.set(item.category.id, true);    // set any value to Map
+                result.push({
+                    id: item.category.id,
+                    name: item.category.name
+                });
+            }
+        }
+        return result;
+      }
+      Axios.get('dish/types/').then(success => {
+        const response = success.data['types'];
+        let categories = getUniqueCategories(response);
+        console.log(categories);
+        localStorage.setItem('category',  JSON.stringify(categories));
+        localStorage.setItem('types', JSON.stringify(response));
+      }, error => {alert("Problem with Server Refresh The Site And Try Again")});      
     }
 }
 </script>

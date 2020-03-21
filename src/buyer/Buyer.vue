@@ -1,7 +1,7 @@
 <template>
-    <div id="app">
+    <div>
         <br>
-        <b-card>
+        <!-- <b-card>
          <b-card-title> Select your preferences: </b-card-title>
           <b-form @submit="next">
             <b-form-group id="location" label="Select location" label-for="location">
@@ -13,18 +13,21 @@
             </b-form-group>
             <b-button type="submit" variant="primary">Submit</b-button>
             </b-form>
-        </b-card>
+        </b-card> -->
+        <cat-type />
         <br>
     </div>
 </template>
 
 <script>
 import Search from './Search.vue'
+import CategoryTypeSelect from '../components/common/CategoryTypeSelect';
 
 export default {
     name: 'Buyer',
     components: {
-        'category' : Search
+        'category' : Search,
+        'cat-type': CategoryTypeSelect
 },
     // components : {
     //     'food-card': foodCard

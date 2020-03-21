@@ -1,29 +1,22 @@
 <template>
   <div>
-    <b-form @submit="updateProfile($event)">
-      <!-- phone number  -->
-      <b-form-group label="Phone number" label-for="phone">
-        <b-form-input type="text" id="phone" 
-        v-model="form.phone" 
-        placeholder="Enter your phone number">
-        </b-form-input>
-      </b-form-group>
-      <!-- address -->
-      <b-form-group label="Address" label-for="address">
-        <b-form-input
-          id="address"
-          v-model="form.address"
-          placeholder="Enter your kitchen address"
-          type="text"
-        ></b-form-input>
-      </b-form-group>
-      <b-button type="submit" variant="primary">Save</b-button>
-    </b-form>
-  </div>
+  <b-card no-body>
+    <b-tabs pills card>
+      <b-tab title="Add Dish" active>
+      <add-dish />  
+      </b-tab>
+      <b-tab title="My Dishes"><b-card-text>My Dishes</b-card-text></b-tab>
+    </b-tabs>
+  </b-card>
+</div>
 </template>
 
 <script>
+import AddDish from './AddDish';
 export default {
+  components: {
+      'add-dish': AddDish
+  },  
   data() {
     return {
         form: {
@@ -55,6 +48,6 @@ export default {
         this.$refs.selectableTable.unselectRow(2)
       }
     },
-  name: "chef-details"
+  name: "chef-dishes"
 };
 </script>

@@ -4,6 +4,7 @@
         <b-form-group id="input-group-1" label="Email" label-for="input-1">
             <b-form-input
                 id="email"
+                type="email"
                 v-model="form.email"
                 required
                 placeholder="Enter email"
@@ -33,7 +34,6 @@
 <script>
 // import login from '../../_service/user.service';
 import Axios from 'axios';
-import config from '../../config';
 import logInNotifyService from '../../_service/message.service';
 
 export default {
@@ -53,7 +53,6 @@ export default {
           // to keep user logged in between page refreshes
           // user.authdata = window.btoa(username + ':' + password);
           localStorage.setItem('user', JSON.stringify(user));
-          Axios.defaults.baseURL = config.apiUrl;
           Axios.defaults.headers.common['Authorization'] = `Token ${user.token}`;
           logInNotifyService.sendMessage(true);
           this.$router.push({path: `/${user.user.role.name}`})
@@ -66,8 +65,7 @@ export default {
                 "password": this.form.password,
                 "role": (this.form.role.length > 0) ? 2 : 1
             }
-        //    const api_endpoint = register ?   : `${config.apiUrl}users/login/`;
-            Axios.post(`${config.apiUrl}users/login/`, user_data).then(
+            Axios.post('users/login/', user_data).then(
                 data => {this.handleSigninSuccess(data)},
                 error => {console.log(error.body)});
       }

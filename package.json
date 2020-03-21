@@ -19,7 +19,8 @@
     "lodash.orderby": "^4.6.0",
     "rxjs": "^6.5.4",
     "vue": "^2.6.11",
-    "vue-router": "^3.1.6"
+    "vue-router": "^3.1.6",
+    "vue-stripe-elements-plus": "^0.3.2"
   },
   "browserslist": [
     "> 1%",
