@@ -63,6 +63,7 @@
 <script>
 import CategoryTypeSelect from '../components/common/CategoryTypeSelect';
 import Axios from  'axios';
+import DishAddNotifyService from '../_service/dish.service';
 
 export default {
     name: 'add-dishes',
@@ -107,7 +108,9 @@ export default {
             }).then(response => {
                 alert('dish added successfully');
                 // TODO: make an observer class to emit refresh message
+                DishAddNotifyService.sendMessage(true)
                 this.onReset(null);
+
           }, error => console.log(error))
       },
       onReset(evt) {
@@ -118,7 +121,7 @@ export default {
         this.form.image = null
         this.form.type = null
         this.form.order_before = null
-        this.form.price
+        this.form.price = null
       }
     }
   }

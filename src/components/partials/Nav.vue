@@ -26,7 +26,7 @@
         <!-- Using 'button-content' slot -->
         <b-nav-item-dropdown right v-if="user_logged_in">
           <template v-slot:button-content>
-            Mwnu
+            Menu
           </template>
           <b-dropdown-item v-on:click="gotoProfile">Profile</b-dropdown-item>
           <b-dropdown-item v-on:click="gotoDishes">Dishes</b-dropdown-item>
@@ -82,7 +82,7 @@ export default {
     },
     created() {
       this.user_observer = logInNotifyService.getMessage().subscribe(message => {
-            if (message) {
+            if (message["login"]) {
                 // add message to local state if not empty
                 this.user_logged_in = message['login'];
                 if (this.user_logged_in) {

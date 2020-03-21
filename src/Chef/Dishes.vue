@@ -5,7 +5,9 @@
       <b-tab title="Add Dish" active>
       <add-dish />  
       </b-tab>
-      <b-tab title="My Dishes"><b-card-text>My Dishes</b-card-text></b-tab>
+      <b-tab title="My Dishes">
+          <my-dishes />
+      </b-tab>
     </b-tabs>
   </b-card>
 </div>
@@ -13,9 +15,12 @@
 
 <script>
 import AddDish from './AddDish';
+import MyDishes from './MyDihes';
+
 export default {
   components: {
-      'add-dish': AddDish
+      'add-dish': AddDish,
+      'my-dishes': MyDishes
   },  
   data() {
     return {
