@@ -16,18 +16,34 @@ import Search from './buyer/Search.vue'
 import Chef from './Chef/Chef.vue'
 import placeOrder from './buyer/placeOrder.vue'
 import ChefProfile from './Chef/ChefProfile.vue'
+import BuyerProfile from './buyer/BuyerProfile.vue'
+import BuyerDishes from './buyer/BuyerDishes.vue'
 import Dishes from './Chef/Dishes.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+import {loadStripe} from '@stripe/stripe-js';
 
 const routes = [
-  {path: '/', component: Home},
-  {path: '/about', component: About},
+  { path: '/', component: Home },
+  { path: '/about', component: About },
   // {path: '/signup', component: Signup},
   // {path: '/signin', component: Signin},
-  {path: '/buyer', component: Buyer},
-  {path: '/chef', component: Chef,
+  {
+    path: '/buyer', component: Buyer,
+    children: [{
+      name: 'buyer-profile',
+      path: 'profile',
+      component: BuyerProfile
+    },
+    {
+      name: 'buyer-dishes',
+      path: 'dishes',
+      component: BuyerDishes
+    }
+    ]
+  },
+  {
+    path: '/chef', component: Chef,
     children: [{
       name: 'chef-profile',
       path: 'profile',
@@ -39,8 +55,8 @@ const routes = [
       component: Dishes
     }]
   },
-  {path: '/placeOrder', component: placeOrder},
-  {path: '/search/:cuisine', component: Search}
+  { path: '/placeOrder', component: placeOrder },
+  { path: '/search/:cuisine', component: Search }
 ]
 
 const router = new VueRouter({
@@ -54,9 +70,9 @@ router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user');
 
   if (authRequired && !loggedIn) {
-    return next({ 
-      path: '/login', 
-      query: { returnUrl: to.path } 
+    return next({
+      path: '/login',
+      query: { returnUrl: to.path }
     });
   }
 

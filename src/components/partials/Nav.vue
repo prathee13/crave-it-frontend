@@ -56,7 +56,15 @@ export default {
     },
     methods: {
       gotoDishes() {
-        this.$router.push({name: 'chef-dishes'});
+        const user = JSON.parse(localStorage.getItem('user'))['user'];
+        if (user.role.name == 'chef') {
+          this.$router.push({name: 'chef-dishes'});
+        } else if (user.role.name == 'buyer') {
+          this.$router.push({name: 'buyer-dishes'});
+        } else {
+          this.logoutUser();
+        }
+        
       },
       gotoProfile() {
         const user = JSON.parse(localStorage.getItem('user'))['user'];

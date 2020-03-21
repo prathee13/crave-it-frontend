@@ -1,6 +1,7 @@
 <template>
     <div>
         <br>
+        <router-view></router-view>
         <!-- <b-card>
          <b-card-title> Select your preferences: </b-card-title>
           <b-form @submit="next">
@@ -14,7 +15,7 @@
             <b-button type="submit" variant="primary">Submit</b-button>
             </b-form>
         </b-card> -->
-        <cat-type />
+        <!-- <cat-type /> -->
         <br>
     </div>
 </template>
