@@ -24,7 +24,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import {loadStripe} from '@stripe/stripe-js';
 
 const routes = [
-  { path: '/', component: Home },
+  { path: '/', component: Home, name: 'home' },
   { path: '/about', component: About },
   // {path: '/signup', component: Signup},
   // {path: '/signin', component: Signin},

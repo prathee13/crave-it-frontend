@@ -82,7 +82,7 @@ export default {
             localStorage.removeItem('user');
             delete Axios.defaults.headers.common['Authorization'];
             logInNotifyService.sendMessage(false);
-            this.$router.push('/');
+            this.$router.push({name: 'home'});
           }, error => {
             console.log(error);
           });

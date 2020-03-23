@@ -71,7 +71,8 @@ export default {
           Axios.post('buyer/card/', {
               'card_token': data.token.id,
               'last_four': data.token.card.last4,
-              'vendor': data.token.card.brand 
+              'vendor': data.token.card.brand,
+              'card_id': data.token.card.id 
               }).then(success => {
                   this.getBuyerCards()
               }, error => {})
