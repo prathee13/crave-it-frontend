@@ -100,7 +100,8 @@
         placed: [],
         ready: [],
         types: JSON.parse(localStorage.getItem('types')),
-        diah_added_observer: null
+        diah_added_observer: null,
+        user: JSON.parse(localStorage.getItem('user'))['user']
       }
     },
     methods: {
@@ -182,6 +183,7 @@
     },
     mounted() {
         this.getOrders(this.selectedStatus)
+
         // this.getChefDishes();
         // this.diah_added_observer = DishAddNotifyService.getMessage().subscribe(message => {
         //     if (message["added"]) {

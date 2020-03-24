@@ -31,7 +31,7 @@
           <b-dropdown-item v-on:click="gotoProfile">Profile</b-dropdown-item>
           <b-dropdown-item v-on:click="gotoDishes">Dishes</b-dropdown-item>
           <b-dropdown-item v-on:click="gotoOrders">Orders</b-dropdown-item>
-          <b-dropdown-item v-on:click="gotoProfile">Location Tracker</b-dropdown-item>
+          <b-dropdown-item v-on:click="gotoMap">Location Tracker</b-dropdown-item>
           <b-dropdown-item v-on:click="logoutUser()" >Sign Out</b-dropdown-item>
           <b-dropdown-item v-on:click="logoutUser(true)">Sign Out (All devices)</b-dropdown-item>
         </b-nav-item-dropdown>
@@ -55,6 +55,9 @@ export default {
       }
     },
     methods: {
+      gotoMap() {
+        this.$router.push({name: 'chef-map'});
+      },
       gotoOrders() {
         const user = JSON.parse(localStorage.getItem('user'))['user'];
         if (user.role.name == 'chef') {

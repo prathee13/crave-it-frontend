@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyCJUZlNkvC6ZzkF2MGCYCWZtghCY0GeLsM",
+    key: "YOUR_KEY",
     libraries: "places" // necessary for places input
   }
 });
@@ -27,9 +27,19 @@ import BuyerDishes from './buyer/BuyerDishes.vue'
 import Dishes from './Chef/Dishes.vue'
 import BuyerOrders from './buyer/BuyerOrders'
 import ChefOrders from './Chef/ChefOrders.vue'
+import MapService from './Chef/MapService.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import {loadStripe} from '@stripe/stripe-js';
+import Pusher from 'pusher-js';
+
+Pusher.logToConsole = true;
+
+window.pusher_instance = new Pusher("YOUR_KEY", {
+  cluster: "mt1",
+  forceTLS: false
+});
+
 
 const routes = [
   { path: '/', component: Home, name: 'home' },
@@ -71,6 +81,11 @@ const routes = [
       name: 'chef-orders',
       path: 'orders',
       component: ChefOrders
+    },
+    {
+      name: 'chef-map',
+      path: 'locations',
+      component: MapService
     }
   ]
   },

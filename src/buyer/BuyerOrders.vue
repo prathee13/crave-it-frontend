@@ -73,7 +73,8 @@
               <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>&nbsp;
               <b-button size="sm" v-if="row.item.status == 'placed'" @click="cancelOrder(row.item.id)">Cancel Order</b-button>&nbsp;
               <b-button size="sm" v-if="row.item.status == 'ready'" @click="markServed(row.item.id)">I have Received it!</b-button>&nbsp;
-              <b-button size="sm" v-if="row.item.status == 'ready'" @click="shareLocation(row.item.id)">Share my location</b-button>&nbsp;
+              <b-button size="sm" v-if="row.item.status == 'ready' && !shareLocation" @click="shareMyLocation(row.item)">Share my location</b-button>&nbsp;
+              <b-button size="sm" v-if="shareLocation" @click="stopLocation(row.item)">stop sharing my location</b-button>&nbsp;
           </b-col>
         </b-row>
         </b-card>
@@ -86,11 +87,13 @@
  import Axios from 'axios';
  import config from '../config';
  import DishAddNotifyService from '../_service/dish.service';
+import logInNotifyService from '../_service/message.service';
 
   export default {
     name: 'buyer-orders',  
     data() {
       return {
+        shareLocation: false,
         selectedStatus: 'placed',
         sortBy: 'pickup_date',  
         dortDesc: true,
@@ -101,10 +104,48 @@
         placed: [],
         ready:[],
         types: JSON.parse(localStorage.getItem('types')),
-        diah_added_observer: null
+        diah_added_observer: null,
+        location_interval: null,
+        location_service_available: false,
+        user: JSON.parse(localStorage.getItem('user'))['user']
       }
     },
     methods: {
+        stopLocation(item) {
+            clearTimeout(this.location_interval)
+            this.shareLocation = false
+            const message = {
+                        dish_id: item.dish_id,
+                        user_id: this.user.id,
+                        name: this.user.username,
+                        last: true
+                    }
+            Axios.post('order/location/update/', message).then(success => {}, error => {})
+        },
+        shareMyLocation(item) {
+            if (!this.location_service_available) {
+                alert('location sharing not supported on your device.')
+                return
+            }
+            this.shareLocation = true
+            const self = this
+            this.location_interval = setInterval(function(){
+                navigator.geolocation.getCurrentPosition(pos => {
+                    const message = {
+                        dish_id: item.dish_id,
+                        user_id: self.user.id,
+                        name: self.user.username,
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude,
+                        last: false
+                    }
+                    Axios.post('order/location/update/', message).then(success => {}, error => {})
+                }, err => {
+                this.shareLocation = false;
+                alert(err.message);
+                })
+            }, 6000);
+        },
         changeStatus(status) {
             let target_arrey = null
             this.selectedStatus = status
@@ -183,6 +224,11 @@
     },
     mounted() {
         this.getOrders(this.selectedStatus)
+        if (navigator.geolocation) {
+            this.location_service_available = true;
+        } else {
+            this.location_service_available = false
+        }
         // this.getChefDishes();
         // this.diah_added_observer = DishAddNotifyService.getMessage().subscribe(message => {
         //     if (message["added"]) {

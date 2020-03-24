@@ -73,7 +73,7 @@
         fields: ['name', 'description', 'show_details'],
         items: [],
         types: JSON.parse(localStorage.getItem('types')),
-        diah_added_observer: null
+        diah_added_observer: null,
       }
     },
     methods: {
