@@ -1,4 +1,3 @@
-Details via check
 <template>
   <div>
     <b-table :items="items" :fields="fields" striped responsive="sm">

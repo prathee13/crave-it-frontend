@@ -2,10 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
-
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyCJUZlNkvC6ZzkF2MGCYCWZtghCY0GeLsM",
+    libraries: "places" // necessary for places input
+  }
+});
 
 import Home from './view/Home.vue'
 import About from './view/About.vue'
@@ -19,6 +25,8 @@ import ChefProfile from './Chef/ChefProfile.vue'
 import BuyerProfile from './buyer/BuyerProfile.vue'
 import BuyerDishes from './buyer/BuyerDishes.vue'
 import Dishes from './Chef/Dishes.vue'
+import BuyerOrders from './buyer/BuyerOrders'
+import ChefOrders from './Chef/ChefOrders.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import {loadStripe} from '@stripe/stripe-js';
@@ -39,6 +47,11 @@ const routes = [
       name: 'buyer-dishes',
       path: 'dishes',
       component: BuyerDishes
+    },
+    {
+      name: 'buyer-orders',
+      path: 'orders',
+      component: BuyerOrders
     }
     ]
   },
@@ -53,7 +66,13 @@ const routes = [
       name: 'chef-dishes',
       path: 'dishes',
       component: Dishes
-    }]
+    },
+    {
+      name: 'chef-orders',
+      path: 'orders',
+      component: ChefOrders
+    }
+  ]
   },
   { path: '/placeOrder', component: placeOrder },
   { path: '/search/:cuisine', component: Search }

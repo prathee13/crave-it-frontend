@@ -30,7 +30,7 @@
           </template>
           <b-dropdown-item v-on:click="gotoProfile">Profile</b-dropdown-item>
           <b-dropdown-item v-on:click="gotoDishes">Dishes</b-dropdown-item>
-          <b-dropdown-item v-on:click="gotoProfile">Orders</b-dropdown-item>
+          <b-dropdown-item v-on:click="gotoOrders">Orders</b-dropdown-item>
           <b-dropdown-item v-on:click="gotoProfile">Location Tracker</b-dropdown-item>
           <b-dropdown-item v-on:click="logoutUser()" >Sign Out</b-dropdown-item>
           <b-dropdown-item v-on:click="logoutUser(true)">Sign Out (All devices)</b-dropdown-item>
@@ -55,6 +55,16 @@ export default {
       }
     },
     methods: {
+      gotoOrders() {
+        const user = JSON.parse(localStorage.getItem('user'))['user'];
+        if (user.role.name == 'chef') {
+          this.$router.push({name: 'chef-orders'});
+        } else if (user.role.name == 'buyer') {
+          this.$router.push({name: 'buyer-orders'});
+        } else {
+          this.logoutUser();
+        }
+      },
       gotoDishes() {
         const user = JSON.parse(localStorage.getItem('user'))['user'];
         if (user.role.name == 'chef') {

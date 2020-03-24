@@ -5,17 +5,22 @@
       <b-form-group label="Phone number" label-for="phone">
         <b-form-input type="text" id="phone" 
         v-model="form.phone" 
+        required
         placeholder="Enter your phone number">
         </b-form-input>
       </b-form-group>
       <!-- address -->
       <b-form-group label="Address" label-for="address">
-        <b-form-input
+        <gmap-autocomplete class="form-control" id="address" style="width: 100%" placeholder="Enter your kitchen address" 
+        required
+          @place_changed="setPlace">
+        </gmap-autocomplete>
+        <!-- <b-form-input
           id="address"
           v-model="form.address"
           placeholder="Enter your kitchen address"
           type="text"
-        ></b-form-input>
+        ></b-form-input> -->
       </b-form-group>
       <b-button type="submit" variant="primary">Save</b-button>
     </b-form>
@@ -23,37 +28,51 @@
 </template>
 
 <script>
+import Axios from 'axios'
+
 export default {
   data() {
     return {
         form: {
         address: "",
         phone_number: "",
+        latitude: "",
+        longitude: ""
         },
-        chef: null
+        is_profile_loaded: false
     };
   },
   mounted() {
-      
+      Axios.get('profile/chef/').then(success => {
+        console.log(success.data)
+        if (!success.data['message']) {
+          this.$set(this.form, 'address', success.data.address)
+          this.form.longitude = success.data.longitude
+          this.form.latitude = success.data.latitude
+          this.form.address = success.data.address
+          this.form.phone_number = success.data.phone_number
+          this.is_profile_loaded = true
+          console.log(this.form)
+        }
+      }, error => {
+        console.log(error)
+      })
   },
   methods: {
-      onRowSelected(items) {
-        this.selected = items
-      },
-      selectAllRows() {
-        this.$refs.selectableTable.selectAllRows()
-      },
-      clearSelected() {
-        this.$refs.selectableTable.clearSelected()
-      },
-      selectThirdRow() {
-        // Rows are indexed from 0, so the third row is index 2
-        this.$refs.selectableTable.selectRow(2)
-      },
-      unselectThirdRow() {
-        // Rows are indexed from 0, so the third row is index 2
-        this.$refs.selectableTable.unselectRow(2)
-      }
+    updateProfile(event) {
+      event.preventDefault()
+      console.log(this.is_profile_loaded)
+      const axios_instance = !this.is_profile_loaded ? Axios.post : Axios.put
+      axios_instance('profile/chef/', this.form).then(success => {alert("profile data updated successfully")}, error => {
+        console.log(error);
+      })
+    },
+    setPlace(place) {
+      this.form.address = place.formatted_address
+      this.form.longitude = place.geometry.location.lat()
+      this.form.latitude = place.geometry.location.lng()
+      console.log(this.form)
+    },
     },
   name: "chef-details"
 };
