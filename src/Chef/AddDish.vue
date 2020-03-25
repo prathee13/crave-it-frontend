@@ -64,6 +64,7 @@
 import CategoryTypeSelect from '../components/common/CategoryTypeSelect';
 import Axios from  'axios';
 import DishAddNotifyService from '../_service/dish.service';
+import catTypeComponentService from '../_service/cattype.service'
 
 export default {
     name: 'add-dishes',
@@ -116,6 +117,7 @@ export default {
       onReset(evt) {
         // evt.preventDefault()
         // Reset our form values
+        catTypeComponentService.sendMessage({reset:true})
         this.form.name = ''
         this.form.description = null
         this.form.image = null

@@ -25,6 +25,8 @@
   </b-card>
 </template>
 <script>
+import catTypeComponentService from '../../_service/cattype.service'
+
 export default {
   name: "cat-type-select",
   data() {
@@ -34,8 +36,32 @@ export default {
       category: JSON.parse(localStorage.getItem('category')),
       types: [],
       selected_category: undefined,
-      selected_type: undefined
+      selected_type: undefined,
+      message_observer: null,
     };
+  },
+  created() {
+    const self = this
+    this.message_observer = catTypeComponentService.getMessage().subscribe(message => {
+      if (message.reset) {
+        self.selected_category = ''
+        self.selected_type = ''
+        self.type_disable = true
+        self.types = []
+      } else if (message.type) {
+        const type = self.all_types.filter(x => x.name == message.type)[0]
+        const cat = self.category.filter(x => x.id == type.category.id)
+        self.$set(self.$data, 'selected_category', cat[0].id)
+        self.categoryChanged()
+        self.selected_type = type.id
+        self.typeChanged(self.selected_type)
+      }
+    })
+  },
+  beforeDestroy() {
+    if (this.message_observer) {
+      this.message_observer.unsubscribe()
+    }
   },
   methods: {
       categoryChanged() {

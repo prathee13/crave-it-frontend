@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "YOUR_KEY",
+    key: "AIzaSyCJUZlNkvC6ZzkF2MGCYCWZtghCY0GeLsM",
     libraries: "places" // necessary for places input
   }
 });
@@ -35,7 +35,7 @@ import Pusher from 'pusher-js';
 
 Pusher.logToConsole = true;
 
-window.pusher_instance = new Pusher("YOUR_KEY", {
+window.pusher_instance = new Pusher("10012db2cefe6b0c7bbc", {
   cluster: "mt1",
   forceTLS: false
 });

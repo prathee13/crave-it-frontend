@@ -4,7 +4,7 @@
       <!-- phone number  -->
       <b-form-group label="Phone number" label-for="phone">
         <b-form-input type="text" id="phone" 
-        v-model="form.phone" 
+        v-model="form.phone_number" 
         required
         placeholder="Enter your phone number">
         </b-form-input>
@@ -12,7 +12,8 @@
       <!-- address -->
       <b-form-group label="Address" label-for="address">
         <gmap-autocomplete class="form-control" id="address" style="width: 100%" placeholder="Enter your kitchen address" 
-        required
+          required
+          :value="form.address"
           @place_changed="setPlace">
         </gmap-autocomplete>
         <!-- <b-form-input
@@ -22,7 +23,7 @@
           type="text"
         ></b-form-input> -->
       </b-form-group>
-      <b-button type="submit" variant="primary">Save</b-button>
+      <b-button type="submit" variant="primary">{{ form.address == "" ? "save": "update" }}</b-button>
     </b-form>
   </div>
 </template>

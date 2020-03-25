@@ -68,7 +68,7 @@ export default {
                 localStorage.setItem('user', JSON.stringify(user));
                 Axios.defaults.headers.common['Authorization'] = `Token ${user.token}`;
                 logInNotifyService.sendMessage(true);
-                this.$router.push({path: `/${user.user.role.name}`})
+                this.$router.push({name: `${user.user.role.name}-profile`})
             }
         },
         signUp(evt) {

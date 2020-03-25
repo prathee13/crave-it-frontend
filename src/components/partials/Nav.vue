@@ -31,7 +31,7 @@
           <b-dropdown-item v-on:click="gotoProfile">Profile</b-dropdown-item>
           <b-dropdown-item v-on:click="gotoDishes">Dishes</b-dropdown-item>
           <b-dropdown-item v-on:click="gotoOrders">Orders</b-dropdown-item>
-          <b-dropdown-item v-on:click="gotoMap">Location Tracker</b-dropdown-item>
+          <b-dropdown-item v-if="showMap" v-on:click="gotoMap">Location Tracker</b-dropdown-item>
           <b-dropdown-item v-on:click="logoutUser()" >Sign Out</b-dropdown-item>
           <b-dropdown-item v-on:click="logoutUser(true)">Sign Out (All devices)</b-dropdown-item>
         </b-nav-item-dropdown>
@@ -51,12 +51,12 @@ export default {
       return {
         user_logged_in: false,
         user_observer: null,
-        user: null
+        showMap: false,
       }
     },
     methods: {
       gotoMap() {
-        this.$router.push({name: 'chef-map'});
+          this.$router.push({name: 'chef-orders'});
       },
       gotoOrders() {
         const user = JSON.parse(localStorage.getItem('user'))['user'];
@@ -96,32 +96,39 @@ export default {
             delete Axios.defaults.headers.common['Authorization'];
             logInNotifyService.sendMessage(false);
             this.$router.push({name: 'home'});
+            this.showMap = false;
           }, error => {
             console.log(error);
           });
       }
     },
-    created() {
+    mounted() {
+      const self = this
       this.user_observer = logInNotifyService.getMessage().subscribe(message => {
             if (message["login"]) {
                 // add message to local state if not empty
                 this.user_logged_in = message['login'];
                 if (this.user_logged_in) {
-                  const user_token = JSON.parse(localStorage.getItem('user'))['token'];
+                  const user = JSON.parse(localStorage.getItem('user'));
+                  const user_token = user['token'];
                   console.log(user_token);
                   Axios.defaults.baseURL = config.apiUrl;
                   Axios.defaults.headers.common['Authorization'] = `Token ${user_token}`;
+
+                  if(user.user.role.name == 'chef') {
+                    self.showMap = true
+                  } 
                 }
             } else {
                 // clear messages when empty message received
                 this.user_logged_in = false;
             }
         });
-      if (!this.user_logged_in) {
+      // if (!this.user_logged_in) {
         if (localStorage.getItem('user')) {
           logInNotifyService.sendMessage(true);
         }
-      }
+      // }
     },
     beforeDestroy () {
         // unsubscribe to ensure no memory leaks

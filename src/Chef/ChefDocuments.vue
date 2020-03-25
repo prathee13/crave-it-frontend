@@ -1,8 +1,10 @@
 <template>
   <div>
     <div>
-    <h3> Upload Documents</h3>
     <!-- <b-form @submit=""> -->
+      <div v-if="items.length < 5 ">
+      <h3> Upload Documents</h3>
+      <p> Upload all four documents aontaining(liscence, address proof and two government issued photo ID proofs)</p>
       <div>
       <b-form-file
         v-model="files"
@@ -12,15 +14,16 @@
       ></b-form-file>
       </div>
       <div class="mt-3" style="width: 100%; display:flex; justify-content: center">
-      <b-button @click="uploadDocuments()" variant="primary">Register</b-button>&nbsp;
+      <b-button @click="uploadDocuments()" variant="primary">Upload</b-button>&nbsp;
       <b-button type="reset" @click="this.files = []" variant="danger">Reset</b-button>
+      </div>
       </div>
     <!-- </b-form> -->
     </div>
     <!-- the documents table -->
     
     <div class="mt-5">
-    <h3>Documents</h3>
+    <h3>Uploaded Documents</h3>
     <b-table
       ref="selectableTable"
       selectable

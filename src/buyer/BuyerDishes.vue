@@ -2,13 +2,19 @@
   <b-container>
     <br />
     <b-row>
-      <b-col>
+      <b-col sm="12" md="6">
         <cat-type v-on:type-changed="setType($event)"></cat-type>
+      </b-col>
+      <b-col sm="12" md="6">
+        <div class="text-center mt-3 mb-5">
+            <h3>{{ suggestion_related ? "People also buy these foods" : "Most Ordered Items" }}</h3>
+            <b-button class="mr-3 mt-3" v-for="a in suggestions" v-bind:key="a" @click="loadDishType(a)">{{a}}</b-button>
+        </div>
       </b-col>
     </b-row>
     <b-row v-if="items.length > 0">
       <b-col>
-        <b-table :items="items" :fields="fields" striped responsive="sm">
+        <b-table class="mt-3" :items="items" :fields="fields" striped responsive="sm">
           <template v-slot:cell(show_details)="row">
             <b-button
               size="sm"
@@ -19,7 +25,7 @@
               size="sm"
               @click="info(row.item, row.index, $event.target)"
               class="mr-2"
-            >Info modal</b-button>
+            >Place Order</b-button>
           </template>
 
           <template v-slot:row-details="row">
@@ -151,6 +157,8 @@
 import CategoryTypeSelect from "../components/common/CategoryTypeSelect";
 import Axios from "axios";
 import config from "../config";
+import { Action } from 'rxjs/internal/scheduler/Action';
+import catTypeComponentService from '../_service/cattype.service'
 
 export default {
   name: "buyer-dishes",
@@ -165,6 +173,8 @@ export default {
       types: JSON.parse(localStorage.getItem("types")),
       diah_added_observer: null,
       cards: [],
+      suggestions: [],
+      suggestion_related: false,
       allowed_quantity: [{text: "choose a value", value: null},1,2,3,4,5],
       infoModal: {
           id: 'info-modal',
@@ -188,8 +198,27 @@ export default {
     const minDate = new Date(today)
     this.dateMin = minDate;
     this.form.date = this.dateMin;
+    this.getSuggestions(null)
   },
   methods: {
+    loadDishType(a) {
+      catTypeComponentService.sendMessage({type: a})
+    },
+    getSuggestions(type) {
+      let url_suffix = ''
+      if (type) {
+        url_suffix = `?type=${type}`
+      }
+      this.suggestions = []
+      Axios.get(`suggestions/${url_suffix}`).then(success => {
+        if (url_suffix) {
+          this.suggestion_related = true
+        }
+        for(let suggestion of success.data.types) {
+          this.$set(this.suggestions, this.suggestions.length, suggestion)
+        }
+      })
+    },
     info(item, index, button) {
         this.infoModal.title = `Place Order: ${item.name}`
         this.form.dish_id = item.id
@@ -239,13 +268,16 @@ export default {
           console.log(success);
           this.items = [];
           const dishes = success.data["dishes"];
+          let dish_typ = ''
           for (let dish of dishes) {
             dish.image = `${config.baseUrl}${dish.image}`;
             const dish_type = this.types.filter(x => x.id == dish.type_id)[0];
             dish.type = dish_type.name;
+            dish_typ = dish.type
             dish.category = dish_type.category.name;
             this.$set(this.items, this.items.length, dish);
           }
+          this.getSuggestions(dish_typ)
         },
         error => console.log(error)
       );
