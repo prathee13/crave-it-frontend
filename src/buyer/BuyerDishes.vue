@@ -230,7 +230,7 @@ export default {
         event.preventDefault()
         Axios.post('order/place/', this.form).then(success => {
             alert('order placed successfully')
-            this.$root.$emit('bv::hide::modal', this.infoModal.id, button)
+            this.$bvModal.hide(this.infoModal.id)
             this.onReset()
             this.resetInfoModal()
         }, error => alert(JSON.stringify(error.data['errors'])))
