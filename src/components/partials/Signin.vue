@@ -66,8 +66,7 @@ export default {
                 "role": (this.form.role.length > 0) ? 2 : 1
             }
             Axios.post('users/login/', user_data).then(
-                data => {this.handleSigninSuccess(data)},
-                error => {console.log(error.body)});
+                data => {this.handleSigninSuccess(data)}).catch(error => {alert(error.response.data.errors.non_field_errors)})
       }
     }
   }

@@ -101,7 +101,7 @@ router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
   const publicPages = ['/'];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem('user');
+  let loggedIn = localStorage.getItem('user');
 
   if (authRequired && !loggedIn) {
     return next({
@@ -109,6 +109,19 @@ router.beforeEach((to, from, next) => {
       query: { returnUrl: to.path }
     });
   }
+
+  loggedIn = JSON.parse(loggedIn)
+
+  if (to.fullPath.includes('chef') && loggedIn.user.role.name != 'chef') {
+    return next({
+      path: '/buyer/profile',
+    });
+  } 
+  if (to.fullPath.includes('buyer') && loggedIn.user.role.name != 'buyer') {
+    return next({
+      path: '/chef/profile',
+    });
+  } 
 
   next();
 })

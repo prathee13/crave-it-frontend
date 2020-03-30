@@ -56,7 +56,7 @@ export default {
     },
     methods: {
       gotoMap() {
-          this.$router.push({name: 'chef-orders'});
+          this.$router.push({name: 'chef-map'});
       },
       gotoOrders() {
         const user = JSON.parse(localStorage.getItem('user'))['user'];

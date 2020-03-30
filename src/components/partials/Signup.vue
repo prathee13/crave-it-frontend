@@ -80,8 +80,13 @@ export default {
                 "role": (this.form.role.length > 0) ? 2 : 1
             }
             Axios.post('users/register/', user_data).then(
-                data => {this.handleSignupSuccess(data)},
-                error => {console.log("error")});
+                data => {this.handleSignupSuccess(data)}).catch(error => {
+                    if (error.response.status == 400) {
+                    alert(error.response.data.errors.non_field_errors)}
+                    else {
+                        alert("Combination of email id and role already exists!")
+                    }
+                    })
         },
         onReset(evt) {
         // Reset our form values
